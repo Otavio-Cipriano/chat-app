@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose')
-const Joi = require('joi')
 
 const userSchema = new Schema({
     email: {
@@ -26,7 +25,6 @@ const userSchema = new Schema({
         default: Date.now
     }
 })
+const Users = model('users', userSchema)
 
-
-export const Users = model('users', userSchema)
-
+module.exports = { Users }

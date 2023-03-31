@@ -10,7 +10,8 @@ router.get('/', (req,res) => {
 })
 
 router.post(
-    '/login', 
+    '/login',
+    middlewares.validateLogin, 
     controller.login)
 
 router.post(

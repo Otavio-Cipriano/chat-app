@@ -1,10 +1,11 @@
 const { Server } = require('socket.io')
+const server = require('./server')
 
-
-const socket = (server, options) => {
-    const io = new Server(server, options)
-
-    return io
-}
+const socket = new Server(server, {
+    cors: {
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST"]
+    }
+})
 
 module.exports = socket

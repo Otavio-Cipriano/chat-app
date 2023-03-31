@@ -3,15 +3,11 @@ const server = require('./server')
 const socket = require('./socket')
 
 const { PORT } = require('./config/env')
+const { DBConnection } = require('./config/db')
 
-const io = socket(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"]
-    }
-})
+DBConnection()
 
-io.on('connection', chat)
+socket.on('connection', chat)
 
 server.listen(PORT, () => {
     console.log(`Server Running at ${PORT}`)
