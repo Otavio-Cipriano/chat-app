@@ -2,7 +2,9 @@ import { createBrowserRouter } from "react-router-dom"
 import MainLayout from "../../layouts/MainLayout"
 import Dashboard from "../../pages/Dashboard"
 import Lobby from "../../pages/Lobby"
-import ProtectedRoutes from "../ProtectedRoutes"
+import ProtectedRoute from "../ProtectedRoute"
+import PublicLayout from "../../layouts/PublicLayout"
+import Signup from "../../pages/Signup"
 
 const router = createBrowserRouter([
     {
@@ -10,12 +12,12 @@ const router = createBrowserRouter([
       element: <MainLayout/>,
       children: [
         {
-          path: "/",
-          element: <Lobby/>
+          path: "",
+          element: <Dashboard/>,
         },
         {
-          path: "/chat",
-          element: <ProtectedRoutes><Dashboard/></ProtectedRoutes>,
+          path: "signup",
+          element: <Signup/>
         }
       ]
     }

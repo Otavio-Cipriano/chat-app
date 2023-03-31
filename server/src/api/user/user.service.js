@@ -2,11 +2,13 @@ const repository = require('../user/user.repository')
 
 const create = async (data) => {
     try {
+
         const result = await repository.create(data)
         return {success: true, data: result}
+
     } catch (error) {
         console.log(error)
-        return { success: false, data: 'Ooops'}
+        return { success: false, error: 'Ooops something went wrong'}
     }
 }
 

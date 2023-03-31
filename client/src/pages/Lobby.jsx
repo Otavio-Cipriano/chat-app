@@ -5,25 +5,25 @@ import { useSocket } from '../context/useSocket'
 import { redirect, useNavigate } from "react-router-dom";
 
 export default function Lobby() {
-  const inputRef = useRef(null);
-  const { socket, setUserData } = useSocket()
-  const navigate = useNavigate();
+  // const inputRef = useRef(null);
+  // const { socket, setUserData } = useSocket()
+  // const navigate = useNavigate();
 
   const [formData, setFormData] = useState({})
 
   const onSubmit = (e) => {
     e.preventDefault()
-    socket.emit('join_room', formData)
+    // socket.emit('join_room', formData)
     console.log(formData);
     setUserData(formData)
     navigate('/chat')
   }
 
-  const handleFormChange = (event) => {
-    const name = event.target.name
-    const value = event.target.value
-    setFormData(values => ({ ...values, [name]: value }))
-  }
+  // const handleFormChange = (event) => {
+  //   const name = event.target.name
+  //   const value = event.target.value
+  //   setFormData(values => ({ ...values, [name]: value }))
+  // }
 
   return (
     <Container className='vw-100 vh-100' style={{ display: "grid", placeItems: "center" }}>

@@ -4,8 +4,9 @@ const bcrypt = require('bcrypt')
 
 const signup = async (req, res) => {
     const result = await user.create(req.body)
+
     if(!result.success){
-        return res.status(400).json({success: result.success, msg: 'Ooops something went wrong'})
+        return res.status(400).json({success: result.success, error: result.error})
     }
 
     const token = service.generateToken(result.data.username)

@@ -1,5 +1,5 @@
 import React from 'react'
-import convertToMessageDate from '../hooks/convertDate'
+import convertToMessageDate from '../hooks/useConvertDate'
 import { useSocket } from '../context/useSocket'
 
 export default function Message({ message }) {

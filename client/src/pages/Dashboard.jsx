@@ -8,10 +8,11 @@ export default function Dashboard() {
     <Container fluid>
       <Row>
         <Col md={3} className='vh-100 border-end border-dark'>
-          <Sidebar/>
+          {/* <Sidebar/> */}
+          <h2>AAAAA</h2>
         </Col>
         <Col md={9}>
-          <Chat/>
+          {/* <Chat/> */}
         </Col>
       </Row>
     </Container>

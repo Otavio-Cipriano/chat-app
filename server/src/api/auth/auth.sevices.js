@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken')
 const Joi = require('joi')
 
 const { API_SECRET_KEY } = require('../../config/env')
+const { formatErrorRes } = require('../../helpers/formatFormErroRes')
 
-const validateUserOnSignup = (user) => {
+const validateBodyOnSignup = (user) => {
   const schema = Joi.object({
     username: Joi.string().min(3).max(25).alphanum().required(),
     password: Joi.string().min(6).max(30).required(),
@@ -12,12 +13,12 @@ const validateUserOnSignup = (user) => {
 
   const result = schema.validate(user)
 
-  if (result.error) return { success: false, error: result.error.details }
+  if (result.error) return { success: false, error: formatErrorRes(result.error.details)}
 
   return { success: true, values: result.value }
 }
 
-const validateUserOnLogin = (user) => {
+const validateBodyOnLogin = (user) => {
 
   const schema = Joi.object({
     username: Joi.string().required(),
@@ -26,7 +27,7 @@ const validateUserOnLogin = (user) => {
 
   const result = schema.validate(user)
 
-  if (result.error) return { success: false, error: result.error.details }
+  if (result.error) return { success: false, error: formatErrorRes(result.error.details) }
 
   return { success: true, values: result.value }
 }
@@ -38,4 +39,4 @@ const generateToken = (payload) => {
   return token
 }
 
-module.exports = { validateUserOnSignup, validateUserOnLogin, generateToken }
+module.exports = { validateBodyOnSignup, validateBodyOnLogin, generateToken }
