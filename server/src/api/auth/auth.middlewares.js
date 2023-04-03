@@ -9,9 +9,15 @@ const validateSignup = async (req, res, next) => {
         return res.status(400).json(result)
     }
 
-    const userAlreadyExist = await user.findOne(result.values.username)
+    const usernameAlreadyExists = await user.findOne(result.values.username)
 
-    if(userAlreadyExist.success){
+    if(usernameAlreadyExists.success){
+        return res.status(400).json({message: 'User already exists'})
+    }
+
+    const emailAlreadyExists = await user.findOne(result.values.email)
+
+    if(emailAlreadyExists.success){
         return res.status(400).json({message: 'User already exists'})
     }
 
@@ -29,4 +35,25 @@ const validateLogin = (req, res, next) => {
     next()
 }
 
-module.exports = { validateSignup, validateLogin }
+const validateToken = (req, res, next) => {
+    const authHeader = req.get('Authorization');
+    
+    if(!authHeader) return res.status(401).send({error: "No Token was Provided"})
+
+    const parts = authHeader.split(' ');
+
+    if(!parts.length === 2) return res.status(401).send({error: 'Token Error'})
+
+    const [scheme, token] = parts;
+
+    if(!/^Bearer$/.test(scheme)) return res.status(401).send({error: 'Token in wrong format'})
+    
+    const result = service.validateToken(token)
+
+    if(!result.success) return res.status(401).send({error: result.error})
+
+    req.user = result.decoded
+    next()
+}
+
+module.exports = { validateSignup, validateLogin, validateToken }

@@ -1,8 +1,13 @@
-
-const Rooms = []
+const auth = require('../api/auth/auth.sevices')
 
 const chat = (socket) => {
-    console.log("User Connected")
+    const { token, username } = socket.handshake.auth
+
+    const tokenIsValid = auth.validateToken(token)
+
+    if(!tokenIsValid.success){
+        socket.emit('unauthenticated', {error: "Token Provided Invalid"})
+    }
 
     socket.on('join_room', (data) => {
         socket.join(data.room)

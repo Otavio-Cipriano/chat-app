@@ -14,19 +14,19 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const result = await user.findOne(req.body.username)
-    if(!result.success){
-        return res.status(401).json({success: result.success, message: result.data})
+    const {data, success} = await user.findOne(req.body.username)
+    if(!success){
+        return res.status(401).json({success: success, message: data})
     }
 
-    if(!await bcrypt.compare(req.body.password, result.data.password)){
+    if(!await bcrypt.compare(req.body.password, data.password)){
         return res.status(401).json({message: 'Password invalid'})
     }
 
-    result.data.password = undefined;
+    data.password = undefined;
 
-    const token = service.generateToken(result.data.username)
-    res.status(200).json({success: result.success, data: result, token: token})
+    const token = service.generateToken({data})
+    res.status(200).json({success: success, data: data, token: token})
 }
 
 module.exports = {signup, login }

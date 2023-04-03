@@ -13,7 +13,7 @@ const validateBodyOnSignup = (user) => {
 
   const result = schema.validate(user)
 
-  if (result.error) return { success: false, error: formatErrorRes(result.error.details)}
+  if (result.error) return { success: false, error: formatErrorRes(result.error.details) }
 
   return { success: true, values: result.value }
 }
@@ -33,10 +33,21 @@ const validateBodyOnLogin = (user) => {
 }
 
 const generateToken = (payload) => {
-  const token = jwt.sign({payload: payload}, API_SECRET_KEY, {
-    expiresIn: '1h'
+  const token = jwt.sign({ payload: payload }, API_SECRET_KEY, {
+    expiresIn: "2 days"
   })
   return token
 }
 
-module.exports = { validateBodyOnSignup, validateBodyOnLogin, generateToken }
+
+const validateToken = (token) => {
+  try {
+    const decoded = jwt.verify(token, API_SECRET_KEY)
+
+    return { success: true, decoded: decoded };
+  } catch (error) {
+    return { success: false, error: 'Token Invalid' }
+  }
+}
+
+module.exports = { validateBodyOnSignup, validateBodyOnLogin, generateToken, validateToken }

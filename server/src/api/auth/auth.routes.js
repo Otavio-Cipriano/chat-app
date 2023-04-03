@@ -5,10 +5,6 @@ const middlewares = require('./auth.middlewares')
 
 const router = Router()
 
-router.get('/', (req,res) => {
-    res.send('bunda')
-})
-
 router.post(
     '/login',
     middlewares.validateLogin, 

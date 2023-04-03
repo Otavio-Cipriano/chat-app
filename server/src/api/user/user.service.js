@@ -12,9 +12,9 @@ const create = async (data) => {
     }
 }
 
-const findOne = async (username) => {
+const findOne = async (params) => {
     try {
-        const result = await repository.findOne(username)
+        const result = await repository.findOne(params)
 
         if(!result) return {success: false, data: "User doesn't exist"}
 
